@@ -27,7 +27,6 @@ Track::Track(int width, int windowWidth, int windowHeight, sf::Texture& grassTex
             rightGrassSprites.push_back(s);
         }
 
-    // разметка
     for (int i = 1; i < 3; ++i) {
         sf::RectangleShape line(sf::Vector2f(5.f, static_cast<float>(windowHeight)));
         float lineX = static_cast<float>(trackLeft) + static_cast<float>(i) * static_cast<float>(trackWidth) / 3.f - 2.5f;
