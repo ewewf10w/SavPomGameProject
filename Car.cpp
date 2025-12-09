@@ -34,5 +34,4 @@ void PlayerCar::handleInput(float leftBound, float rightBound, float topBound, f
         move(0, speed);
 }
 
-// --- EnemyCar ---
 EnemyCar::EnemyCar(sf::Texture& texture, float x, float y, float s) : Car(texture, x, y, s) {}

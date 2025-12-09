@@ -4,8 +4,8 @@
 #include <algorithm>
 #include <cmath>
 
-Game::Game(int width, int height)
-    : window(sf::VideoMode(width, height), "Avoid Cars Game")
+Game::Game(sf::RenderWindow& win)
+    : window(win)
 {
     window.setFramerateLimit(60);
 
@@ -23,8 +23,9 @@ Game::Game(int width, int height)
 
     scoreManager.setFont(font);
 
-    track = new Track(400, width, height, grassTexture);
-    player = new PlayerCar(playerTexture, width / 2 - 25, height - 120, 5.0f);
+    sf::Vector2u winSize = window.getSize();
+    track = new Track(400, winSize.x, winSize.y, grassTexture);
+    player = new PlayerCar(playerTexture, winSize.x / 2.f - 25.f, winSize.y - 120.f, 5.0f);
 
     srand(static_cast<unsigned>(time(0)));
 

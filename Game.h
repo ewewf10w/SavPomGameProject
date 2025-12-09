@@ -3,11 +3,12 @@
 #include "Car.h"
 #include "Track.h"
 #include "ScoreManager.h"
+#include "Button.h"
 #include <vector>
 
 class Game {
 private:
-    sf::RenderWindow window;
+    sf::RenderWindow& window;
     sf::Texture playerTexture, enemyTexture, grassTexture;
     PlayerCar* player;
     std::vector<EnemyCar*> enemies;
@@ -15,7 +16,7 @@ private:
     sf::Clock spawnClock;
 
 public:
-    Game(int width, int height);
+    Game(sf::RenderWindow& win);
     ~Game();
     void run();
 
@@ -37,4 +38,10 @@ private:
     void render();
     void spawnEnemy();
     void ResetGame();
+
+    Button* restartButton = nullptr;
+    Button* menuButton = nullptr;
+
+    bool showGameOverMenu = false;
+    bool backToMenu = false;
 };

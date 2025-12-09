@@ -9,7 +9,6 @@ Track::Track(int width, int windowWidth, int windowHeight, sf::Texture& grassTex
     int grassWidth = grassTexture.getSize().x;
     int grassHeight = grassTexture.getSize().y;
 
-    // левая трава
     for (int y = 0; y < windowHeight; y += grassHeight)
         for (int x = 0; x < trackLeft; x += grassWidth)
         {
@@ -18,7 +17,6 @@ Track::Track(int width, int windowWidth, int windowHeight, sf::Texture& grassTex
             leftGrassSprites.push_back(s);
         }
 
-    // правая трава
     for (int y = 0; y < windowHeight; y += grassHeight)
         for (int x = trackRight; x < windowWidth; x += grassWidth)
         {
