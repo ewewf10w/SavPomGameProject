@@ -21,7 +21,6 @@ sf::Sprite& Car::getSprite() {
     return sprite;
 }
 
-// --- PlayerCar ---
 PlayerCar::PlayerCar(sf::Texture& texture, float x, float y, float s) : Car(texture, x, y, s) {}
 
 void PlayerCar::handleInput(float leftBound, float rightBound, float topBound, float bottomBound) {

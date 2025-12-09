@@ -25,11 +25,10 @@ class EnemyCar : public Car {
 public:
     bool wasNearMiss = false;
     bool overtaken = false;
-    float lastY = 0.0f;        // прошлое Y (для детекции пересечения)
+    float lastY = 0.0f;        
     EnemyCar(sf::Texture& texture, float x, float y, float s);
     bool getWasNearMiss() const { return wasNearMiss; }
     void setWasNearMiss(bool v) { wasNearMiss = v; }
 
-    // метод для увеличения скорости, если ещё нет:
     void addSpeed(float delta) { speed += delta; }
 };
