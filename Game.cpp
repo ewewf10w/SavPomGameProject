@@ -73,7 +73,7 @@ void Game::update() {
 
     player->handleInput(track->getLeft(), track->getRight(), 0, 600);
 
-    if (spawnClock.getElapsedTime().asSeconds() > 1.5f) {
+    if (spawnClock.getElapsedTime().asSeconds() > 1.2f) {
         spawnEnemy();
         spawnClock.restart();
     }

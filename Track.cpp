@@ -6,53 +6,52 @@ Track::Track(int width, int windowWidth, int windowHeight, sf::Texture& grassTex
     trackLeft = (windowWidth - trackWidth) / 2;
     trackRight = trackLeft + trackWidth;
 
-    int grassWidth = grassTexture.getSize().x;
-    int grassHeight = grassTexture.getSize().y;
+    const int grassW = grassTexture.getSize().x;
+    const int grassH = grassTexture.getSize().y;
 
-    for (int y = 0; y < windowHeight; y += grassHeight)
-        for (int x = 0; x < trackLeft; x += grassWidth)
+    auto fillGrass = [&](int startX, int endX)
         {
-            sf::Sprite s(grassTexture);
-            s.setPosition(static_cast<float>(x), static_cast<float>(y));
-            leftGrassSprites.push_back(s);
-        }
+            for (int y = 0; y < windowHeight; y += grassH)
+                for (int x = startX; x < endX; x += grassW)
+                {
+                    sf::Sprite s(grassTexture);
+                    s.setPosition((float)x, (float)y);
+                    grassSprites.push_back(s);
+                }
+        };
 
-    for (int y = 0; y < windowHeight; y += grassHeight)
-        for (int x = trackRight; x < windowWidth; x += grassWidth)
-        {
-            sf::Sprite s(grassTexture);
-            s.setPosition(static_cast<float>(x), static_cast<float>(y));
-            rightGrassSprites.push_back(s);
-        }
+    fillGrass(0, trackLeft);
+    fillGrass(trackRight, windowWidth);
+
+    roadRect.setSize({ (float)trackWidth, (float)windowHeight });
+    roadRect.setPosition((float)trackLeft, 0);
+    roadRect.setFillColor({ 100, 100, 100 });
 
     for (int i = 1; i < 3; ++i) {
-        sf::RectangleShape line(sf::Vector2f(5.f, static_cast<float>(windowHeight)));
-        float lineX = static_cast<float>(trackLeft) + static_cast<float>(i) * static_cast<float>(trackWidth) / 3.f - 2.5f;
-        line.setPosition(lineX, 0.f);
+        float x = trackLeft + (float)i * trackWidth / 3.f - 2.5f;
+
+        sf::RectangleShape line({ 5.f, (float)windowHeight });
+        line.setPosition(x, 0);
         line.setFillColor(sf::Color::White);
+
         laneLines.push_back(line);
     }
 }
 
-void Track::draw(sf::RenderWindow& window) {
-    for (auto& s : leftGrassSprites) window.draw(s);
-    for (auto& s : rightGrassSprites) window.draw(s);
-
-    sf::RectangleShape trackRect(sf::Vector2f(static_cast<float>(trackWidth), 600.f));
-    trackRect.setPosition(static_cast<float>(trackLeft), 0.f);
-    trackRect.setFillColor(sf::Color(100, 100, 100));
-    window.draw(trackRect);
-
-    for (auto& line : laneLines) window.draw(line);
+void Track::draw(sf::RenderWindow& window)
+{
+    for (auto& s : grassSprites) window.draw(s);
+    window.draw(roadRect);
+    for (auto& ln : laneLines) window.draw(ln);
 }
 
-std::vector<float> Track::getLanes() const {
+std::vector<float> Track::getLanes() const
+{
+    constexpr float CAR_OFFSET = 25.f;
+
     return {
-        static_cast<float>(trackLeft) + static_cast<float>(trackWidth) / 6.f - 25.f,
-        static_cast<float>(trackLeft) + static_cast<float>(trackWidth) / 2.f - 25.f,
-        static_cast<float>(trackRight) - static_cast<float>(trackWidth) / 6.f - 25.f
+        trackLeft + trackWidth / 6.f - CAR_OFFSET,
+        trackLeft + trackWidth / 2.f - CAR_OFFSET,
+        trackRight - trackWidth / 6.f - CAR_OFFSET
     };
 }
-
-int Track::getLeft() const { return trackLeft; }
-int Track::getRight() const { return trackRight; }

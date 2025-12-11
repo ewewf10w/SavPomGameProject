@@ -41,7 +41,4 @@ private:
 
     Button* restartButton = nullptr;
     Button* menuButton = nullptr;
-
-    bool showGameOverMenu = false;
-    bool backToMenu = false;
 };
